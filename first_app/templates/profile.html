@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h1 class="text-center mt-4 mb-5">Welcome to Profile!</h1>
+<h3 class="ms-3">Hello {{user}}</h3>
+
+<div class="d-flex gap-3 p-3">
+    <p><a class="btn btn-info" href="{% url 'pass_change' %}">Change Your Password!</a></p>
+    <p><a class="btn btn-warning" href="{% url 'pass_change_2' %}">Change Your Password without old password!</a></p>
+</div>
+
+<!-- ----------------------- -->
+
+
+<div class="text-center">
+
+    {% if messages %}
+    {% for m in messages %}
+    <h3 class="text-center bg-success p-2">{{m}}</h3>
+    <!-- <h3 {% if m.tags %} class="text-center p-2 {{m.tags}}"  {% endif %}>{{m}}</h3> -->
+
+    {% endfor %}
+    {% endif %}
+
+</div>
+
+<!-- ----------------------- -->
+
+
+
+<div style="width: 500px; margin:auto">
+    <form method="post" novalidate>
+
+        {% csrf_token %}
+        <!-- {{form | crispy}} -->
+        <!-- ---- Login or logout form er Error show korar jonno ----- -->
+        {% if form.non_field_errors %}
+        {% for err in form.non_field_errors %}
+        <p class="bg-danger text white p-3">{{err}}</p>
+        {% endfor %}
+        {% endif %}
+        <!-- -------------------------- -->
+
+        {% for fm in form %}
+
+        {{fm.label_tag}}
+        {{fm}}
+        {{fm.errors | striptags}}
+
+        {% endfor %}
+
+        <div class="d-flex justify-content-center m-4 mb-5">
+            <button class="btn btn-warning mt-3" type="submit">Change Data</button>
+        </div>
+
+    </form>
+
+</div>
+
+
+
+{% endblock content %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h1 class="text-center mt-4 mb-5">This is Login page!</h1>
+
+
+<div style="width: 500px; margin:auto">
+    <form method="post" novalidate>
+
+        {% csrf_token %}
+        <!-- {{form | crispy}} -->
+<!-- ---- Login or logout form er Error show korar jonno ----- -->
+        {% if form.non_field_errors %}
+        {% for err in form.non_field_errors %}
+        <p class="bg-danger text white p-3">{{err}}</p>    
+        {% endfor %} 
+        {% endif %}
+<!-- -------------------------- -->
+ 
+        {% for fm in form %}
+
+        {{fm.label_tag}}
+        {{fm}}
+        {{fm.errors | striptags}}
+
+        {% endfor %}
+
+        <div class="d-flex justify-content-center m-4 mb-5">
+            <button class="btn btn-primary mt-3" type="submit">Login</button>
+        </div>
+
+    </form>
+
+</div>
+
+
+
+{% endblock content %}
